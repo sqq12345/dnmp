@@ -55,7 +55,7 @@ RUN apt install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     && docker-php-ext-install $mc sysvshm  \
     && :\
     && apt install -y libmemcached-dev zlib1g-dev \
-    && pecl install memcached-2.2.0 \
+    && pecl install memcached \
     && docker-php-ext-enable memcached
 #    && docker-php-ext-install $mc pdo_firebird \
 #    && docker-php-ext-install $mc pdo_dblib \

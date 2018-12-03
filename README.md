@@ -71,7 +71,7 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
 
 要修改端口、日志文件位置、以及是否替换source.list文件等，请修改.env文件，然后重新构建：
 ```bash
-$ docker-compose build php54    # 重建单个服务
+$ docker-compose build php56    # 重建单个服务
 $ docker-compose build          # 重建全部服务
 
 ```
@@ -82,7 +82,7 @@ $ docker-compose build          # 重建全部服务
 
 切换PHP仅需修改相应站点 Nginx 配置的`fastcgi_pass`选项，
 
-例如，示例的 [http://localhost](http://localhost) 用的是PHP5.4，Nginx 配置：
+例如，示例的 [http://localhost](http://localhost) 用的是PHP5.6，Nginx 配置：
 ```
     fastcgi_pass   php56:9000;
 ```
