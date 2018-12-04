@@ -52,11 +52,7 @@ RUN apt install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     && docker-php-ext-install $mc shmop \
     && docker-php-ext-install $mc sysvmsg \
     && docker-php-ext-install $mc sysvsem \
-    && docker-php-ext-install $mc sysvshm  \
-    && :\
-    && apt install -y libmemcached-dev zlib1g-dev \
-    && pecl install memcached \
-    && docker-php-ext-enable memcached
+    && docker-php-ext-install $mc sysvshm
 #    && docker-php-ext-install $mc pdo_firebird \
 #    && docker-php-ext-install $mc pdo_dblib \
 #    && docker-php-ext-install $mc pdo_oci \
@@ -114,3 +110,7 @@ RUN apt install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
 #    && apt install -y libmagickwand-dev \
 #    && pecl install imagick-3.4.3 \
 #    && docker-php-ext-enable imagick \
+#    && :\
+#    && apt install -y libmemcached-dev zlib1g-dev \
+#    && pecl install memcached-2.2.0 \
+#    && docker-php-ext-enable memcached
