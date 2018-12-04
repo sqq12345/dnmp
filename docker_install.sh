@@ -33,6 +33,19 @@ do_install(){
 		pip install docker-compose --ignore-installed requests	
 	fi
 
+	if command_exists git; then
+		echo "git 已安装"
+	else
+		yum -y install git
+	fi
+	sudo gpasswd -a ${USER} docker
+	mkdir -p /www/
+	cd /www
+	git clone http://gl.ycpai.com/service/lnmp-docker.git
+	cd lnmp-docker
+	cp env.sample .env 
+	docker-compose up
+
 }
 
 do_install
