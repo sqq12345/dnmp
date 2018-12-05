@@ -18,12 +18,12 @@ command_exists() {
 
 
 Install_Check(){
-	while [ "$yes" != 'yes' ] && [ "$yes" != 'n' ]
+	while [ "$yes" != 'y' ] && [ "$yes" != 'n' ]
 	do
 		echo -e "----------------------------------------------------"
 		echo -e "docker install tool"
 		echo -e "----------------------------------------------------"
-		read -p "输入yes强制安装/Enter yes to force installation (yes/n): " yes;
+		read -p "输入yes强制安装/Enter yes to force installation (y/n): " yes;
 	done 
 	if [ "$yes" == 'n' ];then
 		exit;
@@ -31,7 +31,7 @@ Install_Check(){
 	if [ -z ${setup_path} ]; then
     	setup_path=/www
       	read -p "Default /www,Enter your choice : " setup_path
-      	if [ "${DISTRO}" = "Ubuntu" ]; then
+      	if [ "${setup_path}" = '' ]; then
         	setup_path=/www
     	fi
     fi
