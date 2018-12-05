@@ -1,52 +1,20 @@
-DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
-
-项目特点：
-1. `100%`遵循Docker标准
-2. 支持**多版本PHP**共存，可任意切换（PHP5.6、PHP7.2)
-3. 支持绑定**任意多个域名**
-4. 支持**HTTPS和HTTP/2**
-5. **PHP源代码、MySQL数据、配置文件、日志文件**都可在Host中直接修改查看
-6. 内置**完整PHP扩展安装**命令
-7. 默认安装`pdo_mysql`、`redis`、`xdebug`、`swoole`等常用热门扩展，拿来即用
-8. 带有phpmyadmin和phpredisadmin数据库在线管理程序
-9. 实际项目中应用，确保`100%`可用
-10. 一次配置，**Windows、Linux、MacOs**皆可用
-
+ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
 
 # 目录
-- [1.目录结构](#1目录结构)
-- [2.快速使用](#2快速使用)
-- [3.切换PHP版本](#3切换php版本)
-- [4.使用Log](#5使用log)
-    - [4.1 Nginx日志](#51-nginx日志)
-    - [4.2 PHP-FPM日志](#52-php-fpm日志)
-    - [4.3 MySQL日志](#53-mysql日志)
+- [1.快速使用](#2快速使用)
+- [2.切换PHP版本](#3切换php版本)
+- [3.使用Log](#5使用log)
+    - [3.1 Nginx日志](#31-nginx日志)
+    - [3.2 PHP-FPM日志](#32-php-fpm日志)
+    - [3.3 MySQL日志](#33-mysql日志)
+- [4.php怎么安装扩展](#4php怎么安装扩展)
 - [5.使用composer](#6使用composer)
 - [6.数据库管理](#7数据库管理)
     - [7.1 phpMyAdmin](#71-phpmyadmin)
     - [7.2 phpRedisAdmin](#72-phpredisadmin)
 - [7.在正式环境中安全使用](#8在正式环境中安全使用)
 
-## 1.目录结构
-
-```
-/
-├── conf                    配置文件目录
-│   ├── conf.d              Nginx用户站点配置目录
-│   ├── nginx.conf          Nginx默认配置文件
-│   ├── mysql.cnf           MySQL用户配置文件
-│   ├── php-fpm.conf        PHP-FPM配置文件（部分会覆盖php.ini配置）
-│   └── php.ini             PHP默认配置文件
-├── Dockerfile              PHP镜像构建文件
-├── extensions              PHP扩展源码包
-├── log                     Nginx日志目录
-├── mysql                   MySQL数据目录
-├── www                     PHP代码目录
-└── source.list             Debian源文件
-```
-
-
-## 2.快速使用
+## 1.快速使用
 1. 本地安装`git`、`docker`和`docker-compose`。
 2. `clone`项目：
     ```
@@ -58,7 +26,6 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
     ```
 4. 拷贝环境配置文件`env.sample`为`.env`，启动：
     ```
-    $ cd dnmp
     $ cp env.sample .env   # Windows系统请用copy命令，或者用编辑器打开后另存为.env
     $ docker-compose up
     ```
@@ -76,8 +43,10 @@ $ docker-compose build          # 重建全部服务
 
 ```
 
+6. centos7 可以下载docker_install.sh 进行一键安装
 
-## 3.切换PHP版本
+
+## 2.切换PHP版本
 默认情况下，我们同时创建 **PHP5.6和PHP7.2** 三个PHP版本的容器，
 
 切换PHP仅需修改相应站点 Nginx 配置的`fastcgi_pass`选项，
@@ -93,11 +62,11 @@ $ docker-compose build          # 重建全部服务
 再 **重启 Nginx** 生效。
 
 
-## 4.使用Log
+## 3.使用Log
 
 Log文件生成的位置依赖于conf下各log配置的值。
 
-### 4.1 Nginx日志
+### 3.1 Nginx日志
 Nginx日志是我们用得最多的日志，所以我们单独放在根目录`log`下。
 
 `log`会目录映射Nginx容器的`/var/log/nginx`目录，所以在Nginx配置文件中，需要输出log的位置，我们需要配置到`/var/log/nginx`目录，如：
@@ -106,7 +75,7 @@ error_log  /var/log/nginx/nginx.localhost.error.log  warn;
 ```
 
 
-### 4.2 PHP-FPM日志
+### 3.2 PHP-FPM日志
 大部分情况下，PHP-FPM的日志都会输出到Nginx的日志中，所以不需要额外配置。
 
 另外，建议直接在PHP中打开错误日志：
@@ -132,13 +101,17 @@ ini_set('display_errors', 'on');
     ```
 3. 重启PHP-FPM容器。
 
-### 4.3 MySQL日志
+### 3.3 MySQL日志
 因为MySQL容器中的MySQL使用的是`mysql`用户启动，它无法自行在`/var/log`下的增加日志文件。所以，我们把MySQL的日志放在与data一样的目录，即项目的`mysql`目录下，对应容器中的`/var/lib/mysql/`目录。
 ```bash
 slow-query-log-file     = /var/lib/mysql/mysql.slow.log
 log-error               = /var/lib/mysql/mysql.error.log
 ```
 以上是mysql.conf中的日志文件的配置。
+
+## 4.php怎么安装扩展
+
+
 
 ## 5.使用composer
 ***我们建议在主机HOST中使用composer而不是在容器中使用。***因为：
