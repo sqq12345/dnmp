@@ -23,14 +23,15 @@ Install_Check(){
 		echo -e "----------------------------------------------------"
 		echo -e "docker install tool"
 		echo -e "----------------------------------------------------"
-		read -p "输入yes强制安装/Enter yes to force installation (y/n): " yes;
+		read -p "输入yes强制安装/Enter y to force installation (y/n): " yes;
 	done 
 	if [ "$yes" == 'n' ];then
 		exit;
 	fi
+
 	if [ -z ${setup_path} ]; then
     	setup_path=/www
-      	read -p "Default /www,Enter your choice : " setup_path
+      	read -p "默认安装路径 /www,请输入你想安装的路径 : " setup_path
       	if [ "${setup_path}" = '' ]; then
         	setup_path=/www
     	fi
