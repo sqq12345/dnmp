@@ -21,11 +21,11 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
      注意事项：vagrant下载新版本 2.2.2  （如何查看版本 vagrant  -v）
 
-​            下载地址:  https://www.vagrantup.com/downloads.html
+​      下载地址:  https://www.vagrantup.com/downloads.html
 
 ​                    oracle vm virtualBox  下载版本 5.2.22  （如何查看版本 打开virtualbox软件，点击帮助，查看virtualBox）
 
-​              下载地址:  https://www.virtualbox.org
+​       下载地址:  https://www.virtualbox.org
 
 
 
@@ -59,7 +59,7 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
 ​       
 
-####                                                       如果安装有bug，请自行放血祭天
+####                                                       <center>如果安装有bug，请自行放血祭天</center>
 
 
 
@@ -169,7 +169,7 @@ log-error               = /var/lib/mysql/mysql.error.log
 > #    && docker-php-ext-enable memcached
 > ```
 
-
+​      安装的时候提示：libmemcached directory [no] :  输入yes ，按enter键继续安装
 
 注意事项：如果php7的版本 ：pecl install memcached
 
@@ -177,7 +177,7 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 ​     
 
-### 5.nginx站点的配置   
+## 5.nginx站点的配置   
 
 - 复制  /www/lnmp-docker/conf/conf.d/localhost.conf文件  在同一个目录下，自定义名称（例如anfo.conf）
 
@@ -275,7 +275,7 @@ docker pull <image>  #下载镜像
 
 
 
-##### 9.4 docker的容器操作命令：
+##### 8.4 docker的容器操作命令：
 
 #创建容器
 
