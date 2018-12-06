@@ -15,6 +15,9 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
     - [6.3 docker可视化界面管理](6.3 docker可视化界面管理)
 - [7在正式环境中安全使用](#7在正式环境中安全使用)
 - [8.docker常用命令](http://www.runoob.com/docker/docker-command-manual.html) 
+- [9.docker的mysql的隐患](#9.docker的mysql的隐患)
+    -  [navicate无法连接mysql](# navicate无法连接mysql)
+    - [php无法连接mysql](#php无法连接mysql)
 
 ## 1.快速使用
 1. **本地安装vagrant   和  oracle vm virtualBox** 
@@ -233,6 +236,8 @@ images菜单：显示安装的所有容器
 2. 增强MySQL数据库访问的安全策略
 3. 增强redis访问的安全策略
 
+
+
 ## 8: docker常用命令
 
 docker-compose up  [-d] 启动并运行整个应用程序   -d代表在后天运行
@@ -297,7 +302,9 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
 
 #进入容器
 
-  docker exec 容器的tagname  /bin/bash
+  docker exec 容器的name  /bin/bash
+
+  docker exec 容器的name  /bin/sh
 
 
 
@@ -308,4 +315,34 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
 ​    docker rm `docker ps -a -q` #：删除所有的container
 
 ​    docker ps -a -q | xargs docker rm #：同上, 删除所有的container
+
+
+
+
+
+### 9: docker的mysql的隐患
+
+#### 9.1 navicate无法连接docker的mysql
+
+   问题:   navicate连接docker的mysql提示如下错误
+
+   Authentication plugin ‘caching_sha2_password’ cannot be loaded: 
+
+  解决方案： 则重置root用户的密码：
+
+   首选进入到mysql的容器：docker exec -it   lnmp-docker_mysql_1 /bin/bash
+
+   进入mysql数据 ：use  mysql
+
+   重置root用户的密码：ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+
+
+
+
+
+#### 9.2 php中无法连接docker的mysql
+
+问题:mysql数据库的连接失败
+
+原因:连接的域名不能写成localhost.  可以改成服务器端的ip地址 ，或者使用应用对应的ip address(可以在docker的可视化界面查看)
 
