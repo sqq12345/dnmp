@@ -171,7 +171,7 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 ​      安装的时候提示：libmemcached directory [no] :  输入yes ，按enter键继续安装
 
-注意事项：如果php7的版本 ：pecl install memcached
+​     注意事项：如果php7的版本 ：pecl install memcached
 
 ​                   如果php56的版本： pecl install memcached-2.2.0    
 
@@ -237,7 +237,7 @@ images菜单：显示安装的所有容器
 2. 增强MySQL数据库访问的安全策略
 3. 增强redis访问的安全策略
 
-### 8: docker常用命令
+## 8: docker常用命令
 
 docker-compose up  [-d] 启动并运行整个应用程序   -d代表在后天运行
 
