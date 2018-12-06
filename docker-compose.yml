@@ -96,7 +96,7 @@ services:
   portainer:
     image: portainer/portainer:latest
     ports:
-      - "9000:9000"
+      - "8888:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:cached
       - ./portainer/:/data:cached

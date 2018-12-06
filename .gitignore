@@ -4,3 +4,5 @@
 mysql
 www/*
 !www/localhost/
+log
+portainer

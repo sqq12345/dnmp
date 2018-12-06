@@ -1,10 +1,21 @@
 server {
-    listen       80;
-    server_name  localhost;
-    root   /var/www/html/base/public;
+    listen 443;
+    server_name localhost; 
+    ssl on;
+    root   /var/www/html/localhost;
+    index  index.php index.html index.htm;
 
+    ssl_certificate /etc/nginx/conf.d/certs/base.crt;
+    ssl_certificate_key /etc/nginx/conf.d/certs/base.key;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; 
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;#按照这个套件配置
+    ssl_prefer_server_ciphers on;
+
+  
     location / {
         index  index.htm index.html index.php;
+        #访问路径的文件不存在则重写URL转交给ThinkPHP处理
         if (!-e $request_filename) {
                 rewrite ^(.*)$ /index.php?s=$1 last;
                 break;
@@ -14,8 +25,11 @@ server {
     location ~ \.php$ {
         fastcgi_pass   php72:9000;
         fastcgi_index  index.php;
+        #include        fastcgi_params;
+        #fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include        fastcgi.conf; 
-
+           
+        #设置PATH_INFO并改写SCRIPT_FILENAME,SCRIPT_NAME服务器环境变量 
         set $fastcgi_script_name2 $fastcgi_script_name; 
         if ($fastcgi_script_name ~ "^(.+\.php)(/.+)$") { 
             set $fastcgi_script_name2 $1; 
