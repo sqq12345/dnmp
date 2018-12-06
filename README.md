@@ -57,9 +57,7 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
   ​      （默认的lnmp安装在/www下面，所有在vagrant中可以设置/www的共享目录）
 
-​       
-
-####                                                       <center>如果安装有bug，请自行放血祭天</center>
+​     
 
 
 
@@ -157,19 +155,19 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 ​    例如: 我们需要安装memcached的扩展：
 
-> 先进入php对应的容器
+-    先进入php对应的容器：
 
-​     docker  exec -it  lnmp-docker_php72_1 /bin/bash
+​       docker  exec -it  lnmp-docker_php72_1 /bin/bash
 
-> 然后输入安装的命令   （该命令在dockerfile中）
->
-> ```
-> #     apt install -y libmemcached-dev zlib1g-dev \
-> #    && pecl install memcached \
-> #    && docker-php-ext-enable memcached
-> ```
+- 然后输入以下三行安装的命令   （该命令在dockerfile中） ：
 
-​      安装的时候提示：libmemcached directory [no] :  输入yes ，按enter键继续安装
+​           apt install -y libmemcached-dev zlib1g-dev 
+
+​           pecl install memcached
+
+​          docker-php-ext-enable memcached
+
+​     安装的时候提示：libmemcached directory [no] :  输入yes ，按enter键继续安装
 
 ​     注意事项：如果php7的版本 ：pecl install memcached
 
@@ -219,10 +217,8 @@ http://localhost:8081
  portainer容器映射到主机的端口地址是：9000,所以主机上访问phpMyAdmin的地址是：
 
 ```
-http://localhost:9000
+http://localhost:8888
 ```
-
-登陆的账号：admin   密码：123123123
 
 containers菜单： 可对各个容器进行启动 /停止/删除等操作
 
