@@ -32,11 +32,11 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
 
 
-2：**下载centos7.2box镜像文件，使用compose up进行安装**
+2：**下载centos7.2box镜像文件，使用vagrant up进行安装和启动**
 
 安装使用过程中可能出现的问题：
 
-​        执行compose  up  提示powershell的版本太低，需要升级
+​        执行vagrant up  提示powershell的版本太低，需要升级
 
 ​      如何升级： 从以下地址中下载management framework5.1的版本 
 
