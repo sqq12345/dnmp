@@ -12,12 +12,10 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 - [6.可视化界面管理](#7可视化界面管理)
     - [6.1 phpMyAdmin](#61-phpmyadmin)
     - [6.2 phpRedisAdmin](#62-phpredisadmin)
-    - [6.3 docker可视化界面管理](6.3 docker可视化界面管理)
+    - [6.3 docker可视化界面管理](#63-docker可视化界面管理)
 - [7在正式环境中安全使用](#7在正式环境中安全使用)
 - [8.docker常用命令](http://www.runoob.com/docker/docker-command-manual.html) 
-- [9.docker的mysql的隐患](#9.docker的mysql的隐患)
-    -  [navicate无法连接mysql](# navicate无法连接mysql)
-    - [php无法连接mysql](#php无法连接mysql)
+
 
 ## 1.快速使用
 1. **本地安装vagrant   和  oracle vm virtualBox** 
@@ -58,9 +56,7 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
 - sh  docker_install.sh  执行脚本 等待安装完毕即可  
 
-  ​      （默认的lnmp安装在/www下面，所有在vagrant中可以设置/www的共享目录）
-
-​     
+  ​ （默认的lnmp安装在/www下面，所有在vagrant中可以设置/www的共享目录）
 
 
 
@@ -69,7 +65,7 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 访问在浏览器中访问：
 
  - [http://虚拟机的ip地址](http://虚拟机的ip地址t)： 默认*http*站点
- - [https://虚拟机的ip地址](https:/虚拟机的ip地址)：自定义证书*https*站点，访问时浏览器会有安全提示，忽略提示访问即可
+ - [https://虚拟机的ip地址](https:/虚拟机的ip地址)： 自定义证书*https*站点，访问时浏览器会有安全提示，忽略提示访问即可
  - http://虚拟机的ip地址:8080  可以打开phpMysAdmin的面板操作数据库
  - http://虚拟机的ip地址:8081  可以打开phpRedisAdmin
  - http://虚拟机的ip地址:9000   可以打开docker的图形化管理工具，可以查看镜像 容器 安装等
@@ -82,8 +78,6 @@ $ docker-compose build php56    # 重建单个服务
 $ docker-compose build          # 重建全部服务
 
 ```
-
-
 
 
 ## 2.切换PHP版本
@@ -100,7 +94,6 @@ $ docker-compose build          # 重建全部服务
     fastcgi_pass   php72:9000;
 ```
 再**重启 Nginx** 生效。
-
 
 
 
@@ -154,7 +147,7 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 ## 4.php怎么安装扩展
 
-​    安装扩展的命令，boss已经在http://gl.ycpai.com/service/lnmp-docker的dockerfile文件全部声明: 
+​    安装扩展的命令 : 
 
 ​    例如: 我们需要安装memcached的扩展：
 
@@ -170,13 +163,6 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 ​          docker-php-ext-enable memcached
 
-​     安装的时候提示：libmemcached directory [no] :  输入yes ，按enter键继续安装
-
-​     注意事项：如果php7的版本 ：pecl install memcached
-
-​                   如果php56的版本： pecl install memcached-2.2.0    
-
-​     
 
 ## 5.nginx站点的配置   
 
@@ -212,7 +198,6 @@ phpRedisAdmin容器映射到主机的端口地址是：`8081`，所以主机上�
 ```
 http://localhost:8081
 ```
-
 
 
 ### 6.3 docker可视化界面管理 portainer
@@ -317,32 +302,4 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
 ​    docker ps -a -q | xargs docker rm #：同上, 删除所有的container
 
 
-
-
-
-### 9: docker的mysql的隐患
-
-#### 9.1 navicate无法连接docker的mysql
-
-   问题:   navicate连接docker的mysql提示如下错误
-
-   Authentication plugin ‘caching_sha2_password’ cannot be loaded: 
-
-  解决方案： 则重置root用户的密码：
-
-   首选进入到mysql的容器：docker exec -it   lnmp-docker_mysql_1 /bin/bash
-
-   进入mysql数据 ：use  mysql
-
-   重置root用户的密码：ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
-
-
-
-
-
-#### 9.2 php中无法连接docker的mysql
-
-问题:mysql数据库的连接失败
-
-原因:连接的域名不能写成localhost.  可以改成服务器端的ip地址 ，或者使用应用对应的ip address(可以在docker的可视化界面查看)
 
