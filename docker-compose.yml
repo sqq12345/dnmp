@@ -12,7 +12,8 @@ services:
       - ${NGINX_LOG_DIR}:/var/log/nginx/:rw
     restart: always
     networks:
-      - default
+      docker_net:
+        ipv4_address: ${NGINX_IP}
 
   php72:
     build:
@@ -23,6 +24,9 @@ services:
         PHP_SWOOLE: ${PHP72_SWOOLE}
         PHP_REDIS: ${PHP72_REDIS}
         REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
+    ports:
+      - "9001:9001"  
+      - "9501:9501"  
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${PHP72_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
@@ -31,7 +35,8 @@ services:
     cap_add:
       - SYS_PTRACE
     networks:
-      - default
+      docker_net:
+        ipv4_address: ${PHP72_IP}
 
   php56:
     build:
@@ -50,7 +55,8 @@ services:
     cap_add:
       - SYS_PTRACE
     networks:
-      - default
+      docker_net:
+        ipv4_address: ${PHP56_IP}
 
   mysql:
     image: mysql:${MYSQL_VERSION}
@@ -61,7 +67,8 @@ services:
       - ${MYSQL_DATA_DIR}:/var/lib/mysql/:rw
     restart: always
     networks:
-      - default
+      docker_net:
+        ipv4_address: ${MYSQL_IP}
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
 
@@ -69,7 +76,8 @@ services:
     image: redis:${REDIS_VERSION}
     restart: always
     networks:
-      - default
+      docker_net:
+        ipv4_address: ${REDIS_IP}
     ports:
       - "${REDIS_HOST_PORT}:6379"
 
@@ -78,7 +86,8 @@ services:
     ports:
       - "${PHPMYADMIN_HOST_PORT}:80"
     networks:
-      - default
+      docker_net:
+        ipv4_address: ${MYSQL_ADMIN_IP}
     environment:
       - PMA_HOST=mysql
       - PMA_PORT=3306
@@ -88,7 +97,8 @@ services:
     ports:
       - "${REDISMYADMIN_HOST_PORT}:80"
     networks:
-      - default
+      docker_net:
+        ipv4_address: ${REDIS_ADMIN_IP}
     environment:
       - REDIS_1_HOST=redis
       - REDIS_1_PORT=6379
@@ -97,12 +107,19 @@ services:
     image: portainer/portainer:latest
     ports:
       - "8888:9000"
+    restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:cached
       - ./portainer/:/data:cached
     networks:
-      - default
-
+      docker_net:
+        ipv4_address: ${PORTAINER_IP}
 
 networks:
-  default:
+  docker_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: "${DOCKER_SUBNET}"
