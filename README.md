@@ -1,56 +1,28 @@
 ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
 
 # 目录
-- [1.快速使用](#2快速使用)
-- [2.切换PHP版本](#3切换php版本)
-- [3.使用Log](#5使用log)
+- [1.快速使用](#1快速使用)
+- [2.切换PHP版本](#2切换php版本)
+- [3.使用Log](#3使用log)
     - [3.1 Nginx日志](#31-nginx日志)
     - [3.2 PHP-FPM日志](#32-php-fpm日志)
     - [3.3 MySQL日志](#33-mysql日志)
 - [4.php怎么安装扩展](#4php怎么安装扩展)
-- [5nginx站点的配置](#5nginx站点的配置)
+- [5.nginx站点的配置](#5nginx站点的配置)
 - [6.可视化界面管理](#7可视化界面管理)
     - [6.1 phpMyAdmin](#61-phpmyadmin)
     - [6.2 phpRedisAdmin](#62-phpredisadmin)
     - [6.3 docker可视化界面管理](#63-docker可视化界面管理)
 - [7在正式环境中安全使用](#7在正式环境中安全使用)
-- [8.docker常用命令](http://www.runoob.com/docker/docker-command-manual.html) 
+- [8.docker常用命令](#7docker常用命令) 
 
 
 ## 1.快速使用
-1. **本地安装vagrant   和  oracle vm virtualBox** 
+1.  **通过脚本一键安装   docker  和docker-compose，并通过docker安装lnmp**
 
-     注意事项：vagrant下载新版本 2.2.2  （如何查看版本 vagrant  -v）
+- 使用 docker_install.sh脚本
 
-​      下载地址:  https://www.vagrantup.com/downloads.html
-
-​                    oracle vm virtualBox  下载版本 5.2.22  （如何查看版本 打开virtualbox软件，点击帮助，查看virtualBox）
-
-​       下载地址:  https://www.virtualbox.org
-
-
-
-2：**下载centos7.2box镜像文件，使用vagrant up进行安装和启动**
-
-安装使用过程中可能出现的问题：
-
-​        执行vagrant up  提示powershell的版本太低，需要升级
-
-​      如何升级： 从以下地址中下载management framework5.1的版本 
-
-​            <https://www.microsoft.com/en-us/download/details.aspx?id=54616>
-
-​      同时必须安装net framework4.5以上的版本（请先在卸载程序面板中查看对应的net framework的版本，如果太低，请在以上地址中 找到System Requirements进行下载安装）
-
-
-
-3： **通过脚本一键安装   docker  和docker-compose，并通过docker安装lnmp**
-
-- 从git 地址 http://gl.ycpai.com/service/lnmp-docker.git 中获取其中的docker_install.sh脚本
-
-- 将docker_install.sh脚本文件上传到虚拟机中
-
-- 使用su -切换到root用户，密码是vagrant
+- 使用su -切换到root用户
 
 - 执行chmod a+x docker_install.sh  给脚本添加可执行的权限
 
@@ -60,7 +32,7 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
 
 
-**4：测试是否安装成功**
+**2：测试是否安装成功**
 
 访问在浏览器中访问：
 
