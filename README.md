@@ -148,7 +148,23 @@ log-error               = /var/lib/mysql/mysql.error.log
 - 在虚拟机中创建对应的站点目录文件夹，将代码放在此文件夹中
 
 - 在本机的host文件中添加ip 和域名地址绑定
-
+- 使用acme.sh为网站免费添加https
+ ​ 改用中科大源
+   sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+   apk update
+ ​ 用curl下载安装acme.sh，并开启自动更新
+   apk add --no-cache curl openssl socat
+   curl https://get.acme.sh | sh
+   ~/.acme.sh/acme.sh --upgrade --auto-upgrade
+​  生成证书
+  ~/.acme.sh/acme.sh --issue -d www.xx.com --nginx
+  ~/.acme.sh/acme.sh --installcert -d xx.com \
+                   --key-file /etc/nginx/conf.d/ssl/xx.com/xx.key \
+                   --fullchain-file /etc/nginx/conf.d/ssl/xx.com/fullchain.cer \
+                   --reloadcmd "nginx -s reload"
+​ 配置nginx
+  ssl_certificate /etc/nginx/conf.d/ssl/awaimai.com/fullchain.cer;
+  ssl_certificate_key /etc/nginx/conf.d/ssl/awaimai.com/awaimai.key;
 
 
 
