@@ -4,5 +4,4 @@
 mysql
 portainer
 log
-www/*
 !www/localhost/
