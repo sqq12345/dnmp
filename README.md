@@ -154,9 +154,7 @@ log-error               = /var/lib/mysql/mysql.error.log
    sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
    
    apk update
-      ```
  ​ 用curl下载安装acme.sh，并开启自动更新
-    ```
    apk add --no-cache curl openssl socat
    
    curl https://get.acme.sh | sh
