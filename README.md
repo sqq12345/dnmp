@@ -152,17 +152,22 @@ log-error               = /var/lib/mysql/mysql.error.log
  ​ 改用中科大源
     ```
    sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+   
    apk update
       ```
  ​ 用curl下载安装acme.sh，并开启自动更新
     ```
    apk add --no-cache curl openssl socat
+   
    curl https://get.acme.sh | sh
-   ~/.acme.sh/acme.sh --upgrade --auto-upgrade
+   
+   
       ```
 ​  生成证书
    ```
    ~/.acme.sh/acme.sh --issue -d www.xx.com --nginx
+   
+​ 将证书复制到指定目录并设置自动更新
    ~/.acme.sh/acme.sh --installcert -d xx.com \
                       --key-file /etc/nginx/conf.d/ssl/xx.com/xx.key \
                       --fullchain-file /etc/nginx/conf.d/ssl/xx.com/fullchain.cer \
