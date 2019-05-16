@@ -15,6 +15,24 @@ services:
       docker_net:
         ipv4_address: ${NGINX_IP}
 
+  tomcat:
+    image: tomcat:${TOMCAT_VERSION}
+    ports:
+      - "${TOMCAT_HOST_PORT}:8080"
+      - "${JPDA_HOST_PORT}:5005"
+    volumes:
+      # - ./tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml  #映射 tomcat的配置文件到容器里
+      - ./tomcat/webapps/:/usr/local/tomcat/webapps/          #映射一个web服务
+      - ./tomcat/logs/:/usr/local/tomcat/logs/
+    environment:
+      TZ: Asia/Shanghai
+      JPDA_ADDRESS: 5005
+      JPDA_TRANSPORT: dt_socket
+    command: ["catalina.sh", "jpda", "run"]
+    networks:
+      docker_net:
+        ipv4_address: ${TOMCAT_IP}
+
   php72:
     build:
       context: .
@@ -51,7 +69,6 @@ services:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${PHP56_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
       - ${PHP56_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
-    restart: always
     cap_add:
       - SYS_PTRACE
     networks:
@@ -109,7 +126,7 @@ services:
   portainer:
     image: portainer/portainer:latest
     ports:
-      - "8888:9000"
+      - "${PORTAINER_HOST_PORT}:9000"
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:cached
