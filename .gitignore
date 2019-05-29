@@ -1,8 +1,9 @@
 .idea
 .DS_Store
 .env
+!www/localhost/
 mysql
 mysql5
 portainer
 log
-!www/localhost/
+
