@@ -11,6 +11,7 @@ services:
       - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf:ro
       - ${NGINX_LOG_DIR}:/var/log/nginx/:rw
     restart: always
+    container_name: dnmp-nginx
     networks:
       docker_net:
         ipv4_address: ${NGINX_IP}
@@ -32,6 +33,7 @@ services:
       - ${PHP72_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
       - ${PHP72_LOG_DIR}:/var/log/php
     restart: always
+    container_name: dnmp-php72
     cap_add:
       - SYS_PTRACE
     networks:
@@ -53,6 +55,7 @@ services:
       - ${PHP56_LOG_DIR}:/var/log/php
     cap_add:
       - SYS_PTRACE
+    container_name: dnmp-php56
     networks:
       docker_net:
         ipv4_address: ${PHP56_IP}
@@ -65,6 +68,7 @@ services:
       - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
       - ${MYSQL_DATA_DIR}:/var/lib/mysql/:rw
     restart: always
+    container_name: dnmp-mysql
     networks:
       docker_net:
         ipv4_address: ${MYSQL_IP}
@@ -79,6 +83,7 @@ services:
       - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
     restart: always
     entrypoint: ["redis-server", "/etc/redis.conf"]
+    container_name: dnmp-redis
     networks:
       docker_net:
         ipv4_address: ${REDIS_IP}
