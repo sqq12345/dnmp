@@ -1,7 +1,9 @@
 [client]
 port                    = 3306
 default-character-set   = utf8mb4
-
+host = 'localhost'
+user = 'root'
+password = '123456'
 
 [mysqld]
 user                    = mysql
@@ -27,3 +29,5 @@ default-time-zone       = '+8:00'
 
 [mysql]
 default-character-set   = utf8mb4
+
+
