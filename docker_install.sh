@@ -4,7 +4,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 LANG=en_US.UTF-8
 is64bit=`getconf LONG_BIT`
-#setup_path=/www
+#setup_path=/
 
 if [ "$is64bit" != '64' ];then
 	echo "====================================="
@@ -30,16 +30,17 @@ Install_Check(){
 	fi
 
 	if [ -z ${setup_path} ]; then
-    	setup_path=/www
-      	read -p "默认安装路径 /www,请输入你想安装的路径 : " setup_path
+    	setup_path=/
+      	read -p "默认安装路径 /,请输入你想安装的路径 : " setup_path
       	if [ "${setup_path}" = '' ]; then
-        	setup_path=/www
+        	setup_path=/
     	fi
     fi
 }
 
 
 do_install(){
+
 	Install_Check
 	yum -y update
 
@@ -78,7 +79,6 @@ do_install(){
 	mkdir -p $setup_path
 	cd $setup_path
 	git clone https://github.com/skywalkerwei/dnmp.git
-	cd lnmp-docker
 	cp env.sample .env 
 	docker-compose up
 

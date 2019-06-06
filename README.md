@@ -18,9 +18,9 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
 
 ## 1.快速使用
-1.  **通过脚本一键安装   docker  和docker-compose，并通过docker安装lnmp**
+1.  **通过脚本一键安装   docker  和docker-compose，并通过docker安装dnmp**
 
-- 使用 docker_install.sh脚本
+- 使用 docker_install.sh脚本(redhat 系列linux)
 
 - 使用su -切换到root用户
 
@@ -28,7 +28,7 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
 - sh  docker_install.sh  执行脚本 等待安装完毕即可  
 
-  ​ （默认的lnmp安装在/www下面，所有在vagrant中可以设置/www的共享目录）
+  ​ （默认的dnmp安装在/wwwroot下面，所有在vagrant中可以设置/wwwroot的共享目录）
 
 
 
@@ -42,7 +42,7 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
  - http://虚拟机的ip地址:8081  可以打开phpRedisAdmin
  - http://虚拟机的ip地址:9000   可以打开docker的图形化管理工具，可以查看镜像 容器 安装等
 
-默认情况下该虚拟机指向的项目根目录：在/www/lnmp-docker/www/base/public
+默认情况下该虚拟机指向的项目根目录：在/www/lnmp-docker/wwwroot/base/public
 
 要修改端口、日志文件位置、以及是否替换source.list文件等，请修改.env文件，然后重新构建：
 ```bash
@@ -53,7 +53,7 @@ $ docker-compose build          # 重建全部服务
 
 
 ## 2.切换PHP版本
-默认情况下，我们同时创建 **PHP5.6和PHP7.2** 三个PHP版本的容器，
+默认情况下，我们同时创建 **PHP5.6和PHP7.3** 两个PHP版本的容器，
 
 切换PHP仅需修改相应站点 Nginx 配置的`fastcgi_pass`选项，
 
@@ -63,7 +63,7 @@ $ docker-compose build          # 重建全部服务
 ```
 要改用PHP7.2，修改为：
 ```
-    fastcgi_pass   php72:9000;
+    fastcgi_pass   php73:9000;
 ```
 再**重启 Nginx** 生效。
 
@@ -125,15 +125,15 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 -    先进入php对应的容器：
 
-​       docker  exec -it  lnmp-docker_php72_1 /bin/bash
+​       docker  exec -it  dnmp-php72 sh
 
 - 然后输入以下三行安装的命令   （该命令在dockerfile中） ：
 
-​           apt install -y libmemcached-dev zlib1g-dev 
+​       apt install -y libmemcached-dev zlib1g-dev 
 
-​           pecl install memcached
+​       pecl install memcached
 
-​          docker-php-ext-enable memcached
+​       docker-php-ext-enable memcached
 
 
 ## 5.nginx站点的配置   
@@ -152,15 +152,11 @@ log-error               = /var/lib/mysql/mysql.error.log
  ​ 改用中科大源
     ```
    sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-   
    apk update
- ​ 用curl下载安装acme.sh，并开启自动更新
+ ​  用curl下载安装acme.sh，并开启自动更新
    apk add --no-cache curl openssl socat
-   
    curl https://get.acme.sh | sh
-   
-   
-      ```
+    ```
 ​  生成证书
    ```
    ~/.acme.sh/acme.sh --issue -d www.xx.com --nginx
@@ -178,8 +174,6 @@ log-error               = /var/lib/mysql/mysql.error.log
   ssl_certificate_key /etc/nginx/conf.d/ssl/xx.com/xx.key;
  
 
-
-
 ## 6.数据库管理
 本项目默认在`docker-compose.yml`中开启了用于MySQL在线管理的*phpMyAdmin*，以及用于redis在线管理的*phpRedisAdmin*，可以根据需要修改或删除。
 
@@ -187,6 +181,7 @@ log-error               = /var/lib/mysql/mysql.error.log
 phpMyAdmin容器映射到主机的端口地址是：`8080`，所以主机上访问phpMyAdmin的地址是：
 ```
 http://localhost:8080
+
 ```
 
 MySQL连接信息：
@@ -199,15 +194,11 @@ phpRedisAdmin容器映射到主机的端口地址是：`8081`，所以主机上�
 http://localhost:8081
 ```
 
-
-
-
 ## 7.在正式环境中安全使用
 要在正式环境中使用，请：
 1. 在php.ini中关闭XDebug调试
 2. 增强MySQL数据库访问的安全策略
 3. 增强redis访问的安全策略
-
 
 
 ## 8: docker常用命令
@@ -223,7 +214,6 @@ docker -v  #仅仅只是查看docker版本号
 docker info #查看系统(docker)层面信息，包括管理的images, containers数等
 
 docker  ps  #查看启动的容器
-
 
 
 ##### 8.2 docker的启动  暂停  重启
@@ -244,8 +234,7 @@ docker search <image> # 在docker 资源库中搜索image
 
 docker pull <image>  #下载镜像
 
- docker rmi  <image ID> #删除镜像
-
+docker rmi  <image ID> #删除镜像
 
 
 ##### 8.4 docker的容器操作命令：

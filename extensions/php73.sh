@@ -12,13 +12,13 @@ echo
 
 
 if [ -z "${EXTENSIONS##*,mcrypt,*}" ]; then
-    echo "---------- mcrypt was REMOVED from PHP 7.2.0 ----------"
+    echo "---------- mcrypt was REMOVED from PHP 7.3.0 ----------"
 fi
 
 
 if [ -z "${EXTENSIONS##*,sodium,*}" ]; then
     echo "---------- Install sodium ----------"
-    echo "Sodium is bundled with PHP from PHP 7.2.0 "
+    echo "Sodium is bundled with PHP from PHP 7.3.0 "
 fi
 
 
