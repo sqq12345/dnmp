@@ -1,4 +1,4 @@
-ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
+DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
 
 # 目录
 - [1.快速使用](#1快速使用)
@@ -120,8 +120,15 @@ log-error               = /var/lib/mysql/mysql.error.log
 ## 4.php怎么安装扩展
 
 ​    安装扩展的命令 : 
+     pecl install 扩展名称 
+     docker-php-ext-enable 扩展名称
 
-​    例如: 我们需要安装memcached的扩展：
+​    例如:
+   我们需要安装swoole的扩展：
+       pecl install  swoole
+      docker-php-exe-enable swoole
+     
+   我们需要安装memcached的扩展：
 
 -    先进入php对应的容器：
 
