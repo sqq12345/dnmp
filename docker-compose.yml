@@ -40,31 +40,6 @@ services:
       docker_net:
         ipv4_address: ${PHP73_IP}
 
-  php72:
-    build:
-      context: .
-      args:
-        PHP_VERSION: ${PHP72_VERSION}
-        ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
-        PHP_EXTENSIONS: ${PHP72_EXTENSIONS}
-        MORE_EXTENSION_INSTALLER: php72.sh
-    ports:
-      - "${XDEBUG72_HOST_PORT}:${XDEBUG72_HOST_PORT}"
-      - "${SWOOLE72_HOST_PORT}:${SWOOLE72_HOST_PORT}"
-    volumes:
-      - ${SOURCE_DIR}:/var/www/html/:rw
-      - ${PHP72_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
-      - ${PHP72_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ${PHP72_LOG_DIR}:/var/log/php
-    restart: always
-    container_name: dnmp-php72
-    cap_add:
-      - SYS_PTRACE
-    networks:
-      docker_net:
-        ipv4_address: ${PHP72_IP}
-
-
   php56:
     build:
       context: .
