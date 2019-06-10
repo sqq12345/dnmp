@@ -24,14 +24,22 @@ if [ -z "${EXTENSIONS##*,sodium,*}" ]; then
 	docker-php-ext-install ${MC} sodium
 fi
 
-
 if [ -z "${EXTENSIONS##*,redis,*}" ]; then
     echo "---------- Install redis ----------"
-    mkdir redis \
-    && tar -xf redis-4.1.1.tgz -C redis --strip-components=1 \
-    && ( cd redis && phpize && ./configure && make ${MC} && make install ) \
-    && docker-php-ext-enable redis
+    apk add --no-cache --virtual .build-deps \
+    g++ make autoconf
+    pecl install redis
+    docker-php-ext-enable redis
 fi
+
+
+# if [ -z "${EXTENSIONS##*,redis,*}" ]; then
+#     echo "---------- Install redis ----------"
+#     mkdir redis \
+#     && tar -xf redis-4.1.1.tgz -C redis --strip-components=1 \
+#     && ( cd redis && phpize && ./configure && make ${MC} && make install ) \
+#     && docker-php-ext-enable redis
+# fi
 
 
 if [ -z "${EXTENSIONS##*,memcached,*}" ]; then

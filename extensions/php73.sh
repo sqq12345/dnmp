@@ -50,6 +50,8 @@ fi
 
 if [ -z "${EXTENSIONS##*,swoole,*}" ]; then
     echo "---------- Install swoole ----------"
+    apk add --no-cache --virtual .build-deps \
+    g++ make autoconf
     pecl install swoole
     docker-php-ext-enable swoole
 fi
