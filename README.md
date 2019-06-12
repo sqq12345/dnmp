@@ -1,4 +1,4 @@
-DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
+ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
 
 # 目录
 - [1.快速使用](#1快速使用)
@@ -14,8 +14,15 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
     - [6.2 phpRedisAdmin](#62-phpredisadmin)
     - [6.3 docker可视化界面管理](#63-docker可视化界面管理)
 - [7在正式环境中安全使用](#7在正式环境中安全使用)
-- [8.docker常用命令](#7docker常用命令) 
-
+- [8.docker常用命令](#7docker常用命令)
+- [9.docker管理容器](#9docker管理容器)
+    - [9.1 docker 管理php](#91-docker 管理php)
+    - [9.2 docker 管理nginx](#92-docker 管理nginx)
+    - [9.3 docker 管理mysql](#93-docker 管理mysql)
+    - [9.4 docker 管理redis](#94-docker 管理redis)
+    - [9.5 docker 管理Crontab](#95-docker 管理Crontab)
+    - [9.6 docker 管理Swoole/WebSocket ](#96-docker 管理Swoole/WebSocket)
+- [10.composer管理](#10composer管理)
 
 ## 1.快速使用
 1.  **通过脚本一键安装   docker  和docker-compose，并通过docker安装dnmp**
@@ -40,8 +47,7 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
  - [https://虚拟机的ip地址](https:/虚拟机的ip地址)： 自定义证书*https*站点，访问时浏览器会有安全提示，忽略提示访问即可
  - http://虚拟机的ip地址:8080  可以打开phpMysAdmin的面板操作数据库
  - http://虚拟机的ip地址:8081  可以打开phpRedisAdmin
- - http://虚拟机的ip地址:9000   可以打开docker的图形化管理工具，可以查看镜像 容器 安装等
-
+ - http://虚拟机的ip地址:8888   可以打开docker的图形化管理工具，可以查看镜像 容器 安装等  账号admin  密码123123123
 默认情况下该虚拟机指向的项目根目录：在/www/lnmp-docker/wwwroot/base/public
 
 要修改端口、日志文件位置、以及是否替换source.list文件等，请修改.env文件，然后重新构建：
@@ -120,21 +126,14 @@ log-error               = /var/lib/mysql/mysql.error.log
 ## 4.php怎么安装扩展
 
 ​    安装扩展的命令 : 
-     pecl install 扩展名称 
-     docker-php-ext-enable 扩展名称
 
-​    例如:
-   我们需要安装swoole的扩展：
-       pecl install  swoole
-      docker-php-exe-enable swoole
-     
-   我们需要安装memcached的扩展：
+​    例如: 我们需要安装memcached的扩展：
 
 -    先进入php对应的容器：
 
 ​       docker  exec -it  dnmp-php72 sh
 
-- 然后输入以下三行安装的命令   （该命令在dockerfile中） ：
+     - 然后输入以下三行安装的命令   （该命令在dockerfile中） ：
 
 ​       apt install -y libmemcached-dev zlib1g-dev 
 
@@ -284,5 +283,73 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
 
 ​    docker ps -a -q | xargs docker rm #：同上, 删除所有的container
 
+## 9: docker 管理 
+ ##### 9.1 docker 管理php
+    进入php容器  docker exec -it dnmp-php sh
+    重启php服务  docker-compose restart php
+  
+     修改配置文件 php.init，可使用该命令重新加载配置文件。
+     修改配置文件 www.conf，可使用该命令重新加载配置文件。
 
+    服务管理
+
+    配置测试：docker exec -it dnmp-php bash -c "/usr/local/php/sbin/php-fpm -t"
+    启动：docker exec -it dnmp-php bash -c "/usr/local/php/sbin/php-fpm"
+    关闭：docker exec -it dnmp-php bash -c "kill -INT 1"
+    重启：docker exec -it dnmp-php bash -c "kill -USR2 1"
+    查看php-fpm进程数：docker exec -it dnmp-php bash -c "ps aux | grep -c php-fpm"
+    查看PHP版本：docker exec -it dnmp-php bash -c "/usr/local/php/bin/php -v"
+
+    tips:如果执行上述命名提示the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty' 错误，可在前面加上winpty 即可
+
+
+ ##### 9.2 docker 管理nginx
+      docker exec dnmp-nginx nginx -s reload    重启nginx
+       在容器内执行shell命令：
+       docker exec -it dnmp-nginx sh -c "ps -aef | grep nginx | grep -v grep | grep master |awk '{print $2}'"
+
+ ##### 9.3 docker 管理mysql
+    进入mysql容器  docker exec -it dnmp-mysql sh
+
+    修改配置文件 my.cnf，重新加载：docker-compose restart mysql
+
+    容器内连接：mysql -uroot -p123456
+
+    外部宿主机连接：mysql -h 127.0.0.1 -P 3308 -uroot -p123456
+
+    数据-备份-恢复
+
+    导出（备份）
+    导出数据库中的所有表结构和数据：docker exec -it dnmp-mysql mysqldump -uroot -p123456 test > test.sql
+    只导结构不导数据：docker exec -it dnmp-mysql mysqldump --opt -d -uroot -p123456 test > test.sql
+    只导数据不导结构：docker exec -it dnmp-mysql mysqldump -t -uroot -p123456 test > test.sql
+    导出特定表的结构：docker exec -it dnmp-mysql mysqldump -t -uroot -p123456 --table user > user.sql
+    导入（恢复）docker exec -i dnmp-mysql -uroot -p123456 test < /home/www/test.sql
+    如果导入不成功，检查sql文件头部：mysqldump: [Warning] Using a password on the command line interface can be insecure.是否存在该内容，有则删除即可
+
+ ##### 9.4 docker 管理redis
+    连接Redis容器：docker exec -it dnmp-redis redis-cli -h 127.0.0.1 -p 63789
+
+    通过容器连接：docker exec -it dnmp-redis redis-cli -h dnmp-redis -p 63789
+
+    单独重启redis服务 docker-compose up --no-deps -d redis
+
+    外部宿主机连接：redis-cli -h 127.0.0.1 -p 63789  
+
+  ##### 9.5 docker 管理Crontab
+    执行方案
+    1、使用主机的cron实现定时任务（推荐）
+    2、创建一个新容器专门执行定时任务，crontab for docker
+    3、在原有容器上安装cron，里面运行2个进程
+
+
+  ##### 9.6 docker 管理Swoole/WebSocket 
+     未完待续
+
+
+## 10: Composer 管理
+ 执行下列命令：
+  wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer
+  chmod a+x /usr/local/bin/composer
+  composer config -g repo.packagist composer https://packagist.laravel-china.org
 
