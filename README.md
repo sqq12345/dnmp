@@ -284,7 +284,9 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
 ​    docker ps -a -q | xargs docker rm #：同上, 删除所有的container
 
 ## 9: docker 管理 
+
  ##### 9.1 docker 管理php
+
     进入php容器  docker exec -it dnmp-php sh
     重启php服务  docker-compose restart php
   
@@ -304,11 +306,13 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
 
 
  ##### 9.2 docker 管理nginx
+
       docker exec dnmp-nginx nginx -s reload    重启nginx
        在容器内执行shell命令：
        docker exec -it dnmp-nginx sh -c "ps -aef | grep nginx | grep -v grep | grep master |awk '{print $2}'"
 
  ##### 9.3 docker 管理mysql
+
     进入mysql容器  docker exec -it dnmp-mysql sh
 
     修改配置文件 my.cnf，重新加载：docker-compose restart mysql
@@ -328,6 +332,7 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
     如果导入不成功，检查sql文件头部：mysqldump: [Warning] Using a password on the command line interface can be insecure.是否存在该内容，有则删除即可
 
  ##### 9.4 docker 管理redis
+
     连接Redis容器：docker exec -it dnmp-redis redis-cli -h 127.0.0.1 -p 63789
 
     通过容器连接：docker exec -it dnmp-redis redis-cli -h dnmp-redis -p 63789
@@ -337,19 +342,24 @@ docker run -i -t   容器的名称    /bin/bash # 创建一个容器，让其中
     外部宿主机连接：redis-cli -h 127.0.0.1 -p 63789  
 
   ##### 9.5 docker 管理Crontab
+
     执行方案
     1、使用主机的cron实现定时任务（推荐）
     2、创建一个新容器专门执行定时任务，crontab for docker
     3、在原有容器上安装cron，里面运行2个进程
 
 
-  ##### 9.6 docker 管理Swoole/WebSocket 
+  ##### 9.6 docker 管理Swoole/WebSocket
+
      未完待续
 
 
 ## 10: Composer 管理
+
  执行下列命令：
   wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer
+
   chmod a+x /usr/local/bin/composer
+  
   composer config -g repo.packagist composer https://packagist.laravel-china.org
 
