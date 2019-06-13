@@ -195,36 +195,37 @@ $ docker-compose build          # 重建全部服务
 - 在本机的host文件中添加ip 和域名地址绑定
 - 使用acme.sh为网站免费添加https
  ​ 改用中科大源
+
    >sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-   
+   >
    >apk update
    
- ​  用curl下载安装acme.sh，并开启自动更新
+- 用curl下载安装acme.sh，并开启自动更新
 
    >apk add --no-cache curl openssl socat
    
-   >curl https://get.acme.sh | sh
+   >curl https://get.acme.sh | sh   
+
+- 生成证书
  
-​  生成证书
- 
-  > ~/.acme.sh/acme.sh --issue -d www.xx.com --nginx
+   > ~/.acme.sh/acme.sh --issue -d www.xx.com --nginx
   
-  将证书复制到指定目录并设置自动更新,输入如下命令
-  >
-  > ~/.acme.sh/acme.sh --installcert -d xx.com \
-  > 
-  > --key-file /etc/nginx/conf.d/ssl/xx.com/xx.key \
-  >                    
-  > --fullchain-file /etc/nginx/conf.d/ssl/xx.com/fullchain.cer \
-  >                     
-  > --reloadcmd "nginx -s reload"
+- 将证书复制到指定目录并设置自动更新,输入如下命令
+
+   > ~/.acme.sh/acme.sh --installcert -d xx.com \
+   > 
+   > --key-file /etc/nginx/conf.d/ssl/xx.com/xx.key \
+   >                    
+   > --fullchain-file /etc/nginx/conf.d/ssl/xx.com/fullchain.cer \
+   >                     
+   > --reloadcmd "nginx -s reload"
+   
+- nginx配置文件中导入证书，设置证书生效
+
+   >ssl_certificate /etc/nginx/conf.d/ssl/xx.com/fullchain.cer; 
+  
+   >ssl_certificate_key /etc/nginx/conf.d/ssl/xx.com/xx.key;  
                       
-​ 配置nginx
-
-  >ssl_certificate /etc/nginx/conf.d/ssl/xx.com/fullchain.cer; 
-  
-  >ssl_certificate_key /etc/nginx/conf.d/ssl/xx.com/xx.key;   
-
 
 
 ## 5.使用Log
