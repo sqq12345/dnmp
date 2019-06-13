@@ -11,13 +11,13 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
     - [2.6 docker 管理Swoole/WebSocket ](#26-docker 管理Swoole/WebSocket)
 - [3.php 相关管理](#3php 相关管理)
     - [3.1 php切换版本](#31-php切换版本)
-    - [3.2 php安装扩展](#31-docker 管理php)
+    - [3.2 php安装扩展](#31-php安装扩展)
     - [3.3 composer管理](#33-composer管理)
 - [4.nginx站点的配置](#5nginx站点的配置)
 - [5.使用Log](#5使用log)
     - [5.1 Nginx日志](#51-nginx日志)
     - [5.2 PHP-FPM日志](#52-php-fpm日志)
-    - [5.3 MySQL日志](#353-mysql日志)
+    - [5.3 MySQL日志](#53-mysql日志)
 - [6.可视化界面管理](#6可视化界面管理)
     - [6.1 phpMyAdmin](#61-phpmyadmin)
     - [6.2 phpRedisAdmin](#62-phpredisadmin)
@@ -156,28 +156,29 @@ $ docker-compose build          # 重建全部服务
 ​    例如: 我们需要安装memcached的扩展：
 
 -    先进入php对应的容器：
-```
+ 
 ​       docker  exec -it  dnmp-php72 sh
-```
+ 
      - 然后输入以下三行安装的命令   （该命令在dockerfile中） ：
-```
+ 
 ​       apt install -y libmemcached-dev zlib1g-dev 
 
 ​       pecl install memcached
 
 ​       docker-php-ext-enable memcached
-```
 
-### 3.3: Composer 管理
+
+
+ ### 3.3: Composer 管理
 
  执行下列命令：
- ```
+ 
   wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer
 
   chmod a+x /usr/local/bin/composer
   
   composer config -g repo.packagist composer https://packagist.laravel-china.org
-  ```
+  
 
 
 ## 4.nginx站点的配置   
@@ -281,8 +282,11 @@ http://localhost:8080
 ```
 
 MySQL连接信息：
+```
 - username：root
 - password：123456
+```
+
 
 ### 6.2 phpRedisAdmin
 phpRedisAdmin容器映射到主机的端口地址是：`8081`，所以主机上访问phpMyAdmin的地址是：
