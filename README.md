@@ -216,8 +216,8 @@ $ docker-compose build          # 重建全部服务
 ​ 配置nginx
 
   ssl_certificate /etc/nginx/conf.d/ssl/xx.com/fullchain.cer;
-  ssl_certificate_key /etc/nginx/conf.d/ssl/xx.com/xx.key;
- 
+  ssl_certificate_key /etc/nginx/conf.d/ssl/xx.com/xx.key;   
+
 
 
 
