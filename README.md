@@ -9,10 +9,10 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
     - [2.3 docker管理mysql](#23-docker管理mysql)
     - [2.4 docker管理redis](#24-docker管理redis)
     - [2.5 docker管理Crontab](#25-docker管理crontab)
-    - [2.6 docker管理swoole/webSocket ](#26-docker管理websocket)
+    - [2.6 docker管理webSocket ](#26-docker管理websocket)
 - [3.php相关管理](#3php相关管理)
-    - [3.1 php切换版本](#31-php切换版本)
-    - [3.2 php安装扩展](#31-php安装扩展)
+    - [3.1 php切换版本](#31-切换PHP版本)
+    - [3.2 php安装扩展](#31-php怎么安装扩展)
     - [3.3 composer管理](#33-composer管理)
 - [4.nginx站点的配置](#4nginx站点的配置)
 - [5.使用Log](#5使用log)
@@ -20,9 +20,9 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
     - [5.2 PHP-FPM日志](#52-php-fpm日志)
     - [5.3 MySQL日志](#53-mysql日志)
 - [6.可视化界面管理](#6可视化界面管理)
-    - [6.1 phpMyAdmin](#61-phpmyadmin)
-    - [6.2 phpRedisAdmin](#62-phpredisadmin)
-    - [6.3 docker可视化界面管理](#63-docker可视化界面管理)
+    - [6.1 phpMyAdmin](#61-phpMyAdmin)
+    - [6.2 phpRedisAdmin](#62-phpRedisAdmin)
+    - [6.3 docker可视化界面管理](#63-portainer)
 - [7在正式环境中安全使用](#7在正式环境中安全使用)
 
 
@@ -170,7 +170,7 @@ $ docker-compose build          # 重建全部服务
 ​       docker-php-ext-enable memcached
 
 
-### 3.3: Composer 管理
+### 3.3: composer管理
 
  执行下列命令：
  
@@ -279,7 +279,7 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 
 
-## 6.数据库管理
+## 6.可视化界面管理
 本项目默认在`docker-compose.yml`中开启了用于MySQL在线管理的*phpMyAdmin*，以及用于redis在线管理的*phpRedisAdmin*，可以根据需要修改或删除。
 
 ### 6.1 phpMyAdmin
@@ -300,6 +300,12 @@ MySQL连接信息：
 phpRedisAdmin容器映射到主机的端口地址是：`8081`，所以主机上访问phpMyAdmin的地址是：
 ```
 http://localhost:8081
+```
+
+### 6.3 portainer
+portainer容器映射到主机的端口地址是：`8888`，所以主机上访问phpMyAdmin的地址是：
+```
+http://localhost:8888
 ```
 
 ## 7.在正式环境中安全使用
