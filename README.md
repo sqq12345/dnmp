@@ -1,5 +1,6 @@
 DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
 ![Image text](http://gl.ycpai.com/service/dnmp/src/master/assets/image/a.png)
+
 # 目录
 - [1.快速使用](#1快速使用)
 - [2.docker管理容器](#2docker管理 )
@@ -7,8 +8,8 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
     - [2.2 docker管理nginx](#22-docker管理nginx)
     - [2.3 docker管理mysql](#23-docker管理mysql)
     - [2.4 docker管理redis](#24-docker管理redis)
-    - [2.5 docker管理Crontab](#25-docker管理Crontab)
-    - [2.6 docker管理Swoole/WebSocket ](#26-docker管理Swoole/WebSocket)
+    - [2.5 docker管理Crontab](#25-docker管理crontab)
+    - [2.6 docker管理swoole/webSocket ](#26-docker管理swoole/websocket)
 - [3.php相关管理](#3php相关管理)
     - [3.1 php切换版本](#31-php切换版本)
     - [3.2 php安装扩展](#31-php安装扩展)
@@ -59,7 +60,7 @@ $ docker-compose build          # 重建全部服务
 ```
 
 
-## 2: docker管理 
+## 2.docker管理 
 
 ### 2.1 docker管理php
 
@@ -117,7 +118,7 @@ $ docker-compose build          # 重建全部服务
 
     外部宿主机连接：redis-cli -h 127.0.0.1 -p 63789  
 
-### 2.5 docker管理Crontab
+### 2.5 docker管理crontab
 
     执行方案
     1、使用主机的cron实现定时任务（推荐）
@@ -125,7 +126,7 @@ $ docker-compose build          # 重建全部服务
     3、在原有容器上安装cron，里面运行2个进程
 
 
-### 2.6 docker管理Swoole/WebSocket
+### 2.6 docker管理swoole/websocket
 
      未完待续
 
