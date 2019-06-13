@@ -61,7 +61,7 @@ $ docker-compose build          # 重建全部服务
 
 ## 2: docker 管理 
 
- ##### 2.1 docker 管理php
+### 2.1 docker 管理php
 
     进入php容器  docker exec -it dnmp-php sh
     重启php服务  docker-compose restart php
@@ -81,13 +81,13 @@ $ docker-compose build          # 重建全部服务
     tips:如果执行上述命名提示the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty' 错误，可在前面加上winpty 即可
 
 
- ##### 2.2 docker 管理nginx
+### 2.2 docker 管理nginx
 
       docker exec dnmp-nginx nginx -s reload    重启nginx
        在容器内执行shell命令：
        docker exec -it dnmp-nginx sh -c "ps -aef | grep nginx | grep -v grep | grep master |awk '{print $2}'"
 
- ##### 2.3 docker 管理mysql
+### 2.3 docker 管理mysql
 
     进入mysql容器  docker exec -it dnmp-mysql sh
 
@@ -107,7 +107,7 @@ $ docker-compose build          # 重建全部服务
     导入（恢复）docker exec -i dnmp-mysql -uroot -p123456 test < /home/www/test.sql
     如果导入不成功，检查sql文件头部：mysqldump: [Warning] Using a password on the command line interface can be insecure.是否存在该内容，有则删除即可
 
- ##### 2.4 docker 管理redis
+### 2.4 docker 管理redis
 
     连接Redis容器：docker exec -it dnmp-redis redis-cli -h 127.0.0.1 -p 63789
 
@@ -117,7 +117,7 @@ $ docker-compose build          # 重建全部服务
 
     外部宿主机连接：redis-cli -h 127.0.0.1 -p 63789  
 
-  ##### 2.5 docker 管理Crontab
+### 2.5 docker 管理Crontab
 
     执行方案
     1、使用主机的cron实现定时任务（推荐）
