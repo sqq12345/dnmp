@@ -9,7 +9,7 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
     - [2.3 docker管理mysql](#23-docker管理mysql)
     - [2.4 docker管理redis](#24-docker管理redis)
     - [2.5 docker管理Crontab](#25-docker管理crontab)
-    - [2.6 docker管理swoole/webSocket ](#26-docker管理swoolewebsocket)
+    - [2.6 docker管理swoole/webSocket ](#26-docker管理websocket)
 - [3.php相关管理](#3php相关管理)
     - [3.1 php切换版本](#31-php切换版本)
     - [3.2 php安装扩展](#31-php安装扩展)
@@ -126,7 +126,7 @@ $ docker-compose build          # 重建全部服务
     3、在原有容器上安装cron，里面运行2个进程
 
 
-### 2.6 docker管理swoolewebsocket
+### 2.6 docker管理websocket
 
      未完待续
 
