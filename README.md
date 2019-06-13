@@ -128,7 +128,15 @@ $ docker-compose build          # 重建全部服务
 
 ### 2.6 docker管理websocket
 
-     未完待续
+     1.进入dnmp-php容器：docker exec -it dnmp-php73 sh
+     2.以daemon（守护进程）方式启动 workerman / swoole
+     3.宿主机平滑重启 
+     4.env 配置了对应对外端口
+     5.防火墙问题，如果使用阿里云ESC，请在安全组增加入方向和出方向端口配置
+         协议类型：自定义 TCP
+         端口范围：9573/9573  （env对应配置）
+         授权对象：0.0.0.0/0
+     6.通过telnet命令检测远程端口是否打开
 
 
 
@@ -159,26 +167,25 @@ $ docker-compose build          # 重建全部服务
 
 -    先进入php对应的容器：
 
-​       docker  exec -it  dnmp-php72 sh
+     >docker  exec -it  dnmp-php72 sh
  
-- 然后输入以下三行安装的命令   （该命令在dockerfile中)：
  
-​       apt install -y libmemcached-dev zlib1g-dev 
+-   然后输入以下三行安装的命令   （该命令在dockerfile中)：
 
-​       pecl install memcached
+     >apt install -y libmemcached-dev zlib1g-dev  
 
-​       docker-php-ext-enable memcached
+     >pecl install memcached   
+
+     >docker-php-ext-enable memcached 
 
 
-### 3.3: composer管理
-
- 执行下列命令：
- 
-  wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer
-
-  chmod a+x /usr/local/bin/composer
-  
-  composer config -g repo.packagist composer https://packagist.laravel-china.org
+### 3.3 composer管理
+执行下列命令：
+> wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer
+>
+> chmod a+x /usr/local/bin/composer
+>
+> composer config -g repo.packagist composer https://packagist.laravel-china.org
   
 
 
@@ -303,7 +310,7 @@ http://localhost:8081
 ```
 
 ### 6.3 portainer
-portainer容器映射到主机的端口地址是：`8888`，所以主机上访问phpMyAdmin的地址是：
+portainer容器映射到主机的端口地址是：`8888`，所以主机上访问docker可视化界面的地址是：
 ```
 http://localhost:8888
 ```
