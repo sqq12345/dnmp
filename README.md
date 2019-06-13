@@ -2,13 +2,13 @@ ycpai——DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能�
 
 # 目录
 - [1.快速使用](#1快速使用)
-- [2.docker管理容器](#2docker 管理 )
-    - [2.1 docker 管理php](#21-docker 管理php) 
-    - [2.2 docker 管理nginx](#22-docker 管理nginx)
-    - [2.3 docker 管理mysql](#23-docker 管理mysql)
-    - [2.4 docker 管理redis](#24-docker 管理redis)
-    - [2.5 docker 管理Crontab](#25-docker 管理Crontab)
-    - [2.6 docker 管理Swoole/WebSocket ](#26-docker 管理Swoole/WebSocket)
+- [2.docker管理容器](#2docker管理 )
+    - [2.1 docker管理php](#21-docker管理php) 
+    - [2.2 docker管理nginx](#22-docker管理nginx)
+    - [2.3 docker管理mysql](#23-docker管理mysql)
+    - [2.4 docker管理redis](#24-docker管理redis)
+    - [2.5 docker管理Crontab](#25-docker管理Crontab)
+    - [2.6 docker管理Swoole/WebSocket ](#26-docker管理Swoole/WebSocket)
 - [3.php相关管理](#3php相关管理)
     - [3.1 php切换版本](#31-php切换版本)
     - [3.2 php安装扩展](#31-php安装扩展)
@@ -59,9 +59,9 @@ $ docker-compose build          # 重建全部服务
 ```
 
 
-## 2: docker 管理 
+## 2: docker管理 
 
-### 2.1 docker 管理php
+### 2.1 docker管理php
 
     进入php容器  docker exec -it dnmp-php sh
     重启php服务  docker-compose restart php
@@ -81,13 +81,13 @@ $ docker-compose build          # 重建全部服务
     tips:如果执行上述命名提示the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty' 错误，可在前面加上winpty 即可
 
 
-### 2.2 docker 管理nginx
+### 2.2 docker管理nginx
 
       docker exec dnmp-nginx nginx -s reload    重启nginx
        在容器内执行shell命令：
        docker exec -it dnmp-nginx sh -c "ps -aef | grep nginx | grep -v grep | grep master |awk '{print $2}'"
 
-### 2.3 docker 管理mysql
+### 2.3 docker管理mysql
 
     进入mysql容器  docker exec -it dnmp-mysql sh
 
@@ -107,7 +107,7 @@ $ docker-compose build          # 重建全部服务
     导入（恢复）docker exec -i dnmp-mysql -uroot -p123456 test < /home/www/test.sql
     如果导入不成功，检查sql文件头部：mysqldump: [Warning] Using a password on the command line interface can be insecure.是否存在该内容，有则删除即可
 
-### 2.4 docker 管理redis
+### 2.4 docker管理redis
 
     连接Redis容器：docker exec -it dnmp-redis redis-cli -h 127.0.0.1 -p 63789
 
@@ -117,7 +117,7 @@ $ docker-compose build          # 重建全部服务
 
     外部宿主机连接：redis-cli -h 127.0.0.1 -p 63789  
 
-### 2.5 docker 管理Crontab
+### 2.5 docker管理Crontab
 
     执行方案
     1、使用主机的cron实现定时任务（推荐）
