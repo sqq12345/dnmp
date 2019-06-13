@@ -2,7 +2,11 @@ DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一�
 ![Image text](http://gl.ycpai.com/service/dnmp/raw/master/assets/image/a.png)
 # 目录
 - [1.快速使用](#1快速使用)
+<<<<<<< HEAD
 - [2.docker管理容器](#2docker管理)
+=======
+- [2.docker管理容器](#2docker管理 )
+>>>>>>> 07cde71e3f7e6886c29bfc630d90d57e15baaaa5
     - [2.1 docker管理php](#21-docker管理php) 
     - [2.2 docker管理nginx](#22-docker管理nginx)
     - [2.3 docker管理mysql](#23-docker管理mysql)
